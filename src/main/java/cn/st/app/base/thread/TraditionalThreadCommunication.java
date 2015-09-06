@@ -62,10 +62,10 @@ public class TraditionalThreadCommunication {
 
 
 class Business {
-    private boolean shouldSub = true;
+    private boolean shouldBeSub = true;
 
     public synchronized void sub(int j) {
-        while (!shouldSub) {
+        while (!shouldBeSub) {
             try {
                 this.wait();
             } catch (InterruptedException e) {
@@ -76,12 +76,12 @@ class Business {
         for (int i = 0; i < 10; i++) {
             System.out.println("sub thread sequence of " + i + ", loop of " + j);
         }
-        shouldSub = false;
+        shouldBeSub = false;
         this.notify();
     }
 
     public synchronized void main(int j) {
-        while (shouldSub) {
+        while (shouldBeSub) {
             try {
                 this.wait();
             } catch (InterruptedException e) {
@@ -92,7 +92,7 @@ class Business {
         for (int i = 0; i < 100; i++) {
             System.out.println("main thread sequence of " + i + ", loop of " + j);
         }
-        shouldSub = true;
+        shouldBeSub = true;
         this.notify();
     }
 }
