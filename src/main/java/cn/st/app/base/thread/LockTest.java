@@ -55,11 +55,18 @@ public class LockTest {
         public void print(String s) {
             int len = s.length();
             lock.lock();
-            for (int i = 0; i < len; i++) {
-                System.out.print(s.charAt(i));
+            // 防止异常，锁未解开，出现死锁
+            try {
+
+                for (int i = 0; i < len; i++) {
+                    System.out.print(s.charAt(i));
+                }
+                System.out.println();
+
+            } finally {
+                lock.unlock();
             }
-            System.out.println();
-            lock.unlock();
+
         }
     }
 }
